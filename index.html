@@ -15,19 +15,26 @@
         autoplay
         playsinline
         preload="auto"
-        muted
         disablepictureinpicture
         disableremoteplayback
         x-webkit-airplay="deny"
       >
-        <source src="assets/startup-fast.mp4" type="video/mp4">
+        <source src="assets/startup-alt.mp4" type="video/mp4">
       </video>
 
-      <div class="gate" data-gate hidden aria-hidden="true">
-        <span class="gate__panel" aria-hidden="true">
-          <span class="gate__eyebrow">Syncing</span>
-          <span class="gate__label">Decoding low-fi stream</span>
-        </span>
+      <div class="gate" data-gate hidden>
+        <div class="gate__panel">
+          <span class="gate__eyebrow">Unlock Feed</span>
+          <div class="unlock" data-unlock>
+            <div class="unlock__slot">
+              <div class="unlock__glow"></div>
+              <button class="unlock__pin" data-unlock-pin type="button" aria-label="Slide up to unlock">
+                <span class="unlock__pin-rib"></span>
+              </button>
+            </div>
+          </div>
+          <span class="gate__label" data-gate-label>Slide up to unlock</span>
+        </div>
       </div>
 
       <p class="sr-only" aria-live="polite" data-status></p>
