@@ -10,8 +10,8 @@
   <body>
     <main class="screen">
       <video
-        class="player"
-        data-player
+        class="player player--active"
+        data-startup-player
         autoplay
         playsinline
         preload="auto"
@@ -21,10 +21,21 @@
       >
         <source src="assets/startup-alt.mp4" type="video/mp4">
       </video>
+      <video
+        class="player player--hidden"
+        data-continuation-player
+        playsinline
+        preload="auto"
+        disablepictureinpicture
+        disableremoteplayback
+        x-webkit-airplay="deny"
+      >
+        <source src="assets/continuation.mp4" type="video/mp4">
+      </video>
 
       <div class="gate" data-gate hidden>
         <div class="gate__panel">
-          <span class="gate__eyebrow">Unlock Feed</span>
+          <span class="gate__eyebrow">Unlock Clip</span>
           <div class="unlock" data-unlock>
             <div class="unlock__slot">
               <div class="unlock__glow"></div>

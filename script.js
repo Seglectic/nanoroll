@@ -1,18 +1,13 @@
 const STARTUP_SRC = "assets/startup-alt.mp4";
 const CONTINUATION_SRC = "assets/continuation.mp4";
 
-const player = document.querySelector("[data-player]");
+const startupPlayer = document.querySelector("[data-startup-player]");
+const continuationPlayer = document.querySelector("[data-continuation-player]");
 const gate = document.querySelector("[data-gate]");
 const gateLabel = document.querySelector("[data-gate-label]");
 const status = document.querySelector("[data-status]");
 const unlock = document.querySelector("[data-unlock]");
 const unlockPin = document.querySelector("[data-unlock-pin]");
-
-const preloader = document.createElement("video");
-preloader.preload = "auto";
-preloader.muted = true;
-preloader.playsInline = true;
-preloader.setAttribute("playsinline", "");
 
 const UNLOCK_THRESHOLD = 0.92;
 
@@ -47,8 +42,7 @@ function primeContinuation() {
   }
 
   continuationQueued = true;
-  preloader.src = CONTINUATION_SRC;
-  preloader.load();
+  continuationPlayer.load();
 }
 
 function setUnlockProgress(progress) {
@@ -61,13 +55,18 @@ function setUnlockProgress(progress) {
   const slotHeight = unlock.offsetHeight;
   const pinHeight = unlockPin.offsetHeight;
   const travel = Math.max(0, slotHeight - pinHeight - 16);
-  const y = (1 - unlockProgress) * travel;
+  const y = unlockProgress * travel;
 
   unlock.style.setProperty("--unlock-progress", unlockProgress.toFixed(3));
   unlockPin.style.transform = `translate(-50%, -${y}px)`;
 }
 
+function activePlayer() {
+  return continuationSwapped ? continuationPlayer : startupPlayer;
+}
+
 async function tryPlayback(unmuted = true) {
+  const player = activePlayer();
   player.muted = !unmuted;
   player.volume = 1;
 
@@ -89,9 +88,16 @@ async function continuePlayback() {
   }
 
   continuationSwapped = true;
-  player.src = CONTINUATION_SRC;
-  player.load();
-  await tryPlayback(true);
+  startupPlayer.pause();
+  startupPlayer.classList.remove("player--active");
+  startupPlayer.classList.add("player--hidden");
+  continuationPlayer.classList.remove("player--hidden");
+  continuationPlayer.classList.add("player--active");
+  continuationPlayer.muted = startupPlayer.muted;
+  continuationPlayer.volume = startupPlayer.volume;
+  await continuationPlayer.play().catch(() => {
+    showGate();
+  });
 }
 
 async function commitUnlock() {
@@ -103,7 +109,7 @@ async function commitUnlock() {
 
   gateLabel.textContent = "Unlocked";
   gate.classList.add("gate--unlocking");
-  setStatus("Playback unlocked.");
+    setStatus("Playback unlocked.");
   setUnlockProgress(1);
   const ok = await tryPlayback(true);
 
@@ -147,16 +153,34 @@ async function endUnlock() {
   await commitUnlock();
 }
 
-player.addEventListener("ended", () => {
+startupPlayer.addEventListener("ended", () => {
   void continuePlayback();
 });
 
-player.addEventListener("playing", () => {
+startupPlayer.addEventListener("playing", () => {
   hideGate();
 });
 
-player.addEventListener("error", () => {
+continuationPlayer.addEventListener("playing", () => {
+  hideGate();
+});
+
+startupPlayer.addEventListener("error", () => {
   showGate();
+});
+
+continuationPlayer.addEventListener("error", () => {
+  showGate();
+});
+
+startupPlayer.addEventListener("timeupdate", () => {
+  if (continuationSwapped || !continuationQueued) {
+    return;
+  }
+
+  if (startupPlayer.duration - startupPlayer.currentTime < 0.45 && continuationPlayer.readyState >= 3) {
+    void continuePlayback();
+  }
 });
 
 unlockPin.addEventListener("pointerdown", (event) => {
@@ -192,8 +216,9 @@ unlockPin.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("load", () => {
-  player.src = STARTUP_SRC;
-  player.load();
+  startupPlayer.src = STARTUP_SRC;
+  continuationPlayer.src = CONTINUATION_SRC;
+  startupPlayer.load();
   setUnlockProgress(0);
 
   requestAnimationFrame(() => {
