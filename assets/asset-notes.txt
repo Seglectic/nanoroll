@@ -1,0 +1,21 @@
+roll.seggsy.club asset notes
+Generated: 2026-06-17
+
+Startup clip comparison from the local 4K source:
+- startup-fast.mp4: 18.0s, 256x144, 12fps, H.264/AAC mono, 150 KiB
+- startup-alt.mp4: 18.0s, 320x180, 15fps, H.264/AAC mono, 230 KiB
+
+Shipped startup asset:
+- startup-fast.mp4
+Reason:
+- It keeps the gag recognizable while cutting startup weight by about 35 percent versus the next cleaner candidate.
+- H.264/AAC is the safest cross-browser choice for GitHub Pages, especially on iPhone Safari.
+
+Continuation asset:
+- continuation.mp4: starts at 00:00:18 from the source, 426x240, 18fps, H.264/AAC mono, about 4.0 MiB
+- The page only starts preloading this file after first paint and the initial playback attempt.
+
+MIDI experiment decision:
+- Not shipped.
+- A public .mid can be smaller than the startup video, but browsers do not reliably play MIDI through the native media stack.
+- Shipping MIDI would require an extra synth or SoundFont path, which adds bytes, hurts autoplay reliability, and conflicts with the no-third-party-runtime constraint.

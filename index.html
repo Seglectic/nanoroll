@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Open</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <main class="screen">
+      <video
+        class="player"
+        data-player
+        autoplay
+        playsinline
+        preload="auto"
+        disablepictureinpicture
+        disableremoteplayback
+        x-webkit-airplay="deny"
+      >
+        <source src="assets/startup-fast.mp4" type="video/mp4">
+      </video>
+
+      <button class="gate" data-gate hidden type="button" aria-label="Open">
+        <span class="gate__label">Open</span>
+      </button>
+
+      <p class="sr-only" aria-live="polite" data-status></p>
+    </main>
+  </body>
+</html>

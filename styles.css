@@ -1,0 +1,93 @@
+:root {
+  --bg: #000;
+  --fg: #f5f1e8;
+  --accent: rgba(255, 247, 214, 0.88);
+  --shadow: rgba(0, 0, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 42%),
+    linear-gradient(180deg, #070707 0%, #000 100%);
+  overflow: hidden;
+}
+
+body {
+  color: var(--fg);
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+}
+
+.player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
+.gate {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  color: var(--fg);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.58)),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 52%);
+  cursor: pointer;
+  transition: opacity 180ms ease;
+}
+
+.gate[hidden] {
+  display: none;
+}
+
+.gate__label {
+  padding: 1rem 1.8rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.42);
+  box-shadow: 0 1.6rem 5rem var(--shadow);
+  font-family: "Arial Narrow", "Franklin Gothic Medium", sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.48em;
+  text-transform: uppercase;
+  text-indent: 0.48em;
+  backdrop-filter: blur(14px);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate {
+    transition: none;
+  }
+}
