@@ -1,7 +1,6 @@
 :root {
   --bg: #000;
-  --fg: #f5f1e8;
-  --accent: rgba(255, 247, 214, 0.88);
+  --fg: #ece7da;
   --shadow: rgba(0, 0, 0, 0.55);
 }
 
@@ -49,9 +48,9 @@ body {
   padding: 0;
   color: var(--fg);
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.58)),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 52%);
-  cursor: pointer;
+    linear-gradient(180deg, rgba(5, 5, 5, 0.985), rgba(0, 0, 0, 1)),
+    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.045), transparent 26%);
+  cursor: default;
   transition: opacity 180ms ease;
 }
 
@@ -59,19 +58,29 @@ body {
   display: none;
 }
 
-.gate__label {
-  padding: 1rem 1.8rem 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.38);
-  border-radius: 999px;
-  background: rgba(10, 10, 10, 0.42);
-  box-shadow: 0 1.6rem 5rem var(--shadow);
+.gate__panel {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: center;
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+}
+
+.gate__eyebrow {
   font-family: "Arial Narrow", "Franklin Gothic Medium", sans-serif;
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.48em;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
-  text-indent: 0.48em;
-  backdrop-filter: blur(14px);
+  opacity: 0.42;
+}
+
+.gate__label {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  opacity: 0.82;
 }
 
 .sr-only {

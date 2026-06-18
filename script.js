@@ -21,7 +21,7 @@ function setStatus(message) {
 
 function showGate() {
   gate.hidden = false;
-  setStatus("Playback is ready. Tap Open to continue.");
+  setStatus("Playback is paused. Tap anywhere to continue.");
 }
 
 function hideGate() {
