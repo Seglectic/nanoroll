@@ -15,6 +15,7 @@
         autoplay
         playsinline
         preload="auto"
+        muted
         disablepictureinpicture
         disableremoteplayback
         x-webkit-airplay="deny"
@@ -22,12 +23,12 @@
         <source src="assets/startup-fast.mp4" type="video/mp4">
       </video>
 
-      <button class="gate" data-gate hidden type="button" aria-label="Resume playback">
+      <div class="gate" data-gate hidden aria-hidden="true">
         <span class="gate__panel" aria-hidden="true">
-          <span class="gate__eyebrow">Loading</span>
-          <span class="gate__label">Preparing media</span>
+          <span class="gate__eyebrow">Syncing</span>
+          <span class="gate__label">Decoding low-fi stream</span>
         </span>
-      </button>
+      </div>
 
       <p class="sr-only" aria-live="polite" data-status></p>
     </main>

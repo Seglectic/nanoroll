@@ -1,21 +1,22 @@
 roll.seggsy.club asset notes
-Generated: 2026-06-17
+Generated: 2026-06-18
 
 Startup clip comparison from the local 4K source:
-- startup-fast.mp4: 18.0s, 256x144, 12fps, H.264/AAC mono, 150 KiB
-- startup-alt.mp4: 18.0s, 320x180, 15fps, H.264/AAC mono, 230 KiB
+- startup-fast.mp4: 18.0s, 640x360 output from a 160px-wide palette-limited source, 12fps, H.264 video-only, about 860 KiB
+- startup-alt.mp4: legacy earlier comparison encode, 18.0s, 320x180, 15fps, H.264/AAC mono, 230 KiB
 
 Shipped startup asset:
 - startup-fast.mp4
 Reason:
-- It keeps the gag recognizable while cutting startup weight by about 35 percent versus the next cleaner candidate.
-- H.264/AAC is the safest cross-browser choice for GitHub Pages, especially on iPhone Safari.
+- It keeps the gag recognizable while shifting to a cleaner blocky low-color look instead of muddy blur.
+- The file stays small enough for QR use while making the pixel treatment intentional.
 
 Continuation asset:
-- continuation.mp4: starts at 00:00:18 from the source, 426x240, 18fps, H.264/AAC mono, about 4.0 MiB
-- The page only starts preloading this file after first paint and the initial playback attempt.
+- continuation.mp4: starts at 00:00:18 from the source, 640x360 output from a 160px-wide palette-limited source, 12fps, H.264 video-only, about 7.0 MiB
+- The page starts preloading this file after first paint and the initial playback attempt.
 
-MIDI experiment decision:
-- Not shipped.
-- A public .mid can be smaller than the startup video, but browsers do not reliably play MIDI through the native media stack.
-- Shipping MIDI would require an extra synth or SoundFont path, which adds bytes, hurts autoplay reliability, and conflicts with the no-third-party-runtime constraint.
+MIDI path:
+- Source MIDI: assets/never-gonna-give-you-up-3.mid
+- Source page: https://bitmidi.com/never-gonna-give-you-up-3-mid
+- Runtime strategy: a tiny built-in Web Audio synth plays an extracted hook window from the MIDI instead of shipping a general MIDI player or SoundFont.
+- Browser note: autoplay with sound is still policy-gated in modern browsers. This build makes a best-effort attempt on load and silently retries on natural page interaction instead of showing an obvious play prompt.
